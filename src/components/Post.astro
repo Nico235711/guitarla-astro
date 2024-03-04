@@ -1,0 +1,20 @@
+---
+
+// interfaz
+export interface Props {
+  titulo: string;
+  contenido: string;
+  publishedAt: string
+  url: string;
+  imagen: object;
+}
+
+const { titulo, contenido, url, imagen, publishedAt } = Astro.props
+
+---
+
+<article>
+  <div class="contenido">
+    <h3>{titulo}</h3>
+  </div>
+</article>
