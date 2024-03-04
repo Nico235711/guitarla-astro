@@ -1,13 +1,40 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import imagen from "../img/nosotros.jpg";
 ---
 
-<Layout title="Nosotros" description='GuitarLA, sobre nosotros, blog de música más'>
+<Layout
+	title="Nosotros"
+	description="GuitarLA, sobre nosotros, blog de música más"
+>
 	<main class="contenedor">
-		<h1 class="heading">Hola mundo Astro</h1>
+		<h1 class="heading">Nosotros</h1>
+
+		<div class="contenido">
+			<img src={imagen.src} alt="imagen de nosotros" />
+
+			<p>
+				Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nihil
+				distinctio labore, repellat sit, repudiandae voluptates explicabo ad
+				facilis neque dolore eaque minima ipsam consequatur pariatur aspernatur,
+				eum perspiciatis consequuntur odit. Aspernatur, porro voluptates? Neque
+				quis, sunt aliquam laboriosam ipsum ipsa voluptas perspiciatis eaque,
+				reiciendis quasi quod quos soluta quas, similique itaque laborum et
+				deserunt autem impedit! Possimus pariatur vel ducimus.
+			</p>
+		</div>
 	</main>
 </Layout>
 
 <style>
-
+	.contenido {
+		display: grid;
+		gap: 4rem;
+	}
+	@media (min-width: 768px) {
+		.contenido {
+			grid-template-columns: repeat(2, 1fr);
+			align-items: center;
+		}
+	}
 </style>
