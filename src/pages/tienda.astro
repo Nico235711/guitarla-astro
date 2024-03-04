@@ -1,8 +1,8 @@
 ---
-import { map } from "astro/zod";
 import Layout from "../layouts/Layout.astro";
+import Guitarra from "../components/Guitarra.astro";
 
-const url = `${import.meta.env.PUBLIC_API_URL}/guitarras`
+const url = `${import.meta.env.PUBLIC_API_URL}/guitarras?populate=imagen`
 const respuesta = await fetch(url)
 const { data } = await respuesta.json()
 
@@ -19,7 +19,14 @@ const { data } = await respuesta.json()
 		<div class="grid">
 			{
 				data?.map(guitarra => (
-					<h1>{guitarra.attributes.nombre}</h1>
+					// en astro no es necesario agregar un key cuando iteras
+					<Guitarra 
+						nombre={guitarra.attributes.nombre}
+						descripcion={guitarra.attributes.descripcion}
+						precio={guitarra.attributes.precio}
+						url={guitarra.attributes.url}
+						imagen={guitarra.attributes.imagen}
+					/>
 				))
 			}
 		</div>
@@ -27,82 +34,5 @@ const { data } = await respuesta.json()
 </Layout>
 
 <style>
-	.guitarra {
-		display: grid;
-		grid-template-columns: 2fr 3fr;
-		gap: 1rem;
-		align-items: center;
-		max-width: 70rem;
-		margin: 0 auto;
-	}
-	.contenido {
-		padding: 1rem;
-	}
-	.contenido h3 {
-		font-size: 3rem;
-		text-transform: uppercase;
-		color: var(--primary);
-	}
-	.descripcion {
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 6;
-		overflow: hidden;
-		font-size: 1.8rem;
-	}
-	.precio {
-		color: var(--primary);
-		font-size: 4rem;
-		margin: 0;
-		font-weight: 900;
-	}
-	.enlace {
-		margin-top: 2rem;
-		display: block;
-		background-color: var(--black);
-		color: var(--white);
-		text-decoration: none;
-		padding: 1rem;
-		text-align: center;
-		text-transform: uppercase;
-		font-size: 1.4rem;
-		font-weight: 700;
-		transition-property: background-color;
-		transition-duration: 300ms;
-	}
-	.enlace:hover {
-		background-color: var(--primary);
-	}
 
-	.formulario {
-		margin-top: 4rem;
-		display: flex;
-		gap: 1rem;
-		flex-direction: column;
-	}
-	.formulario label {
-		font-size: 2.2rem;
-	}
-	.formulario select {
-		border: 1px solid var(--black);
-		padding: 1rem;
-		text-align: center;
-		border-radius: 1rem;
-	}
-	.formulario input[type="submit"] {
-		display: block;
-		width: 100%;
-		text-transform: uppercase;
-		font-weight: bold;
-		border: none;
-		padding: 1.4rem;
-		background-color: var(--black);
-		color: var(--white);
-		transition-property: background-color;
-		transition-duration: 300ms;
-	}
-	.formulario input[type="submit"]:hover {
-		background-color: var(--primary);
-		cursor: pointer;
-	}
 </style>
