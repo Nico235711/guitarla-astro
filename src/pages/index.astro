@@ -1,19 +1,23 @@
 ---
 import Guitarra from "../components/Guitarra.astro";
+import Curso from "../components/Curso.astro";
 import Post from "../components/Post.astro";
 import Layout from "../layouts/Layout.astro";
 
 const urlGuitarras = `${import.meta.env.PUBLIC_API_URL}/guitarras?populate=imagen`;
 const urlPosts = `${import.meta.env.PUBLIC_API_URL}/posts?populate=imagen`;
+const urlCurso = `${import.meta.env.PUBLIC_API_URL}/curso?populate=imagen`;
 
-const [resGuitarras, resPosts] = await Promise.all([
+const [resGuitarras, resPosts, resCurso] = await Promise.all([
 	fetch(urlGuitarras),
 	fetch(urlPosts),
+	fetch(urlCurso)
 ]);
 
-const [{ data: guitarras }, { data: posts }] = await Promise.all([
+const [{ data: guitarras }, { data: posts }, { data: curso }] = await Promise.all([
 	resGuitarras.json(),
 	resPosts.json(),
+	resCurso.json()
 ]);
 
 
@@ -40,6 +44,12 @@ const [{ data: guitarras }, { data: posts }] = await Promise.all([
 			}
 		</div>
 	</main>
+
+	<Curso 
+		titulo={curso.attributes.titulo}
+		contenido={curso.attributes.contenido}
+		imagen={curso.attributes.imagen.data.attributes.url}
+	/>
 
 	<section class="contenedor">
 		<h2 class="heading">Blog</h2>
