@@ -1,5 +1,6 @@
 ---
 import Guitarra from "../components/Guitarra.astro";
+import Post from "../components/Post.astro";
 import Layout from "../layouts/Layout.astro";
 
 const urlGuitarras = `${import.meta.env.PUBLIC_API_URL}/guitarras?populate=imagen`;
@@ -10,13 +11,12 @@ const [resGuitarras, resPosts] = await Promise.all([
 	fetch(urlPosts),
 ]);
 
-const [{ data: guitarras, data: posts }] = await Promise.all([
+const [{ data: guitarras }, { data: posts }] = await Promise.all([
 	resGuitarras.json(),
 	resPosts.json(),
 ]);
 
-console.log(guitarras);
-console.log(posts);
+
 ---
 
 <Layout
@@ -27,7 +27,7 @@ console.log(posts);
 		<h1 class="heading">Nuestra Colección</h1>
 		<div class="grid">
 			{
-				guitarras?.map((guitarra) => (
+				guitarras?.map(guitarra => (
 					// en astro no es necesario agregar un key cuando iteras
 					<Guitarra
 						nombre={guitarra.attributes.nombre}
@@ -40,6 +40,23 @@ console.log(posts);
 			}
 		</div>
 	</main>
+
+	<section class="contenedor">
+		<h2 class="heading">Blog</h2>
+		<div class="grid">
+			{
+				posts?.map(post => (
+					<Post
+						titulo={post.attributes.titulo}
+						contenido={post.attributes.contenido}
+						url={post.attributes.url}
+						publishedAt={post.attributes.publishedAt}
+						imagen={post.attributes.imagen}
+					/>
+				))
+			}
+		</div>
+	</section>
 </Layout>
 
 <style></style>
