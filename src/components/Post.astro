@@ -1,20 +1,49 @@
 ---
+import { formatearFecha } from '../helpers';
 
 // interfaz
 export interface Props {
   titulo: string;
-  contenido: string;
-  publishedAt: string
+  contenido: object;
+  publishedAt: string;
   url: string;
   imagen: object;
 }
 
-const { titulo, contenido, url, imagen, publishedAt } = Astro.props
-
+const { titulo, contenido, url, imagen, publishedAt } = Astro.props;
 ---
 
 <article>
+  <img src={imagen["data"].attributes.formats.medium.url} alt={`${titulo}`} />
   <div class="contenido">
     <h3>{titulo}</h3>
+    <p class="fecha">{formatearFecha(publishedAt)}</p>
+    <p class="resumen">{contenido[0].children[0].text}</p>
+    <a href=`/blog/${url}` class="enlace">Leer Post</a>
   </div>
 </article>
+
+<style>
+  .post {
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+  .fecha {
+    font-size: 1.6rem;
+    color: var(--primary);
+  }
+  .resumen {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+  }
+  .texto {
+    white-space: pre-wrap;
+  }
+
+  .mt-3 {
+    margin-top: 3rem;
+  }
+
+</style>
